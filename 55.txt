@@ -1,0 +1,13 @@
+package Lab_Ex_5;
+public class Ex_2_Weather {
+    String city;
+    String maxTemp;
+    String minTemp;
+    String status;
+ public Ex_2_Weather(String city, String maxTemp, String minTemp, String status) {
+        this.city = city;
+        this.maxTemp = maxTemp;
+        this.minTemp = minTemp;
+        this.status = status;
+    }
+}

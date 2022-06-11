@@ -1,0 +1,84 @@
+package Lab_Ex_5;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.HashMap;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet(name = "Ex_2_Weather_Servlet", urlPatterns = {"/Ex_2_Weather_Servlet"})
+public class Ex_2_Weather_Servlet extends HttpServlet {
+    HashMap<String,Ex_2_Weather> map=new HashMap<>();
+    HashMap<String,String> imgMap=new HashMap<>();
+Ex_2_Weather weather;
+protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+throws ServletException, IOException {
+response.setContentType("text/html;charset=UTF-8");
+try (PrintWriter out = response.getWriter()) {
+imgMap.put("Highly Sunny","data:image/jpeg; ");
+imgMap.put("Sunny","data:image/png; ");
+imgMap.put("Partially Cloudy","https://c.neh.tw/thumb/f/720/comvecteezy366724.jpg");
+imgMap.put("Cloudy","https://encrypted-  tbn0.gstatic.com/images? ");
+imgMap.put("Icy","https://cdn5.vectorstock.com/i/1000x1000/52/94/weather-snow-cloud-symbol-blue-color-vector-905294.jpg");
+imgMap.put("Windy","https://us.123rf.com/450wm/anggar3ind/anggar3ind1701/anggar3ind170100593/68545099-cloud-blowing-wind-cartoon.jpg?ver=6");
+imgMap.put("Rainy","https://www.pngitem.com/pimgs/m/480-4808944_stormy-weather-png-heavy-rain-clipart-transparent-png.png");
+            
+weather=new Ex_2_Weather("Madurai","36\u00B0C","32\u00B0C","Sunny");
+map.put("Madurai",weather);
+weather=new Ex_2_Weather("Chennai","39\u00B0C","36\u00B0C","Sunny");
+map.put("Chennai",weather);
+weather=new Ex_2_Weather("Trichy","35\u00B0C","31\u00B0C","Partially Cloudy");
+map.put("Trichy",weather);
+weather=new Ex_2_Weather("Coimbatore","28\u00B0C","24\u00B0C","Icy");
+map.put("Coimbatore",weather);
+weather=new Ex_2_Weather("Salem","40\u00B0C","36\u00B0C","Highly Sunny");
+map.put("Salem",weather);
+weather=new Ex_2_Weather("Vellore","42\u00B0C","38\u00B0C","Highly Sunny");
+map.put("Vellore",weather);
+weather=new Ex_2_Weather("Tanjore","41\u00B0C","35\u00B0C","Cloudy");
+map.put("Tanjore",weather);
+weather=new Ex_2_Weather("Erode","30\u00B0C","28\u00B0C","Rainy");
+map.put("Erode",weather);
+weather=new Ex_2_Weather("Karur","31\u00B0C","29\u00B0C","Windy");
+map.put("Karur",weather);
+weather=new Ex_2_Weather("Tirupur","30\u00B0C","28\u00B0C","Rainy");
+map.put("Tirupur",weather);
+String city=request.getParameter("cityname");
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet WeatherReport</title>");            
+            out.println("</head>");
+            out.println("<body style='background-color:#ccffff;'>");
+            if(map.containsKey(city))           
+            {
+                weather=map.get(city);
+                out.println("<center><div><h1>Weather Report</h1>");
+                out.println("<h2>"+weather.city+"</h2>");
+                out.println("<img width='100px' height='100px' style='border:2px groove grey;border-radius:40%;' src='"+imgMap.get(weather.status)+"'/>");
+                out.println("<table border=2 width='300px' height='300px' style='cell-padding:2%;text-align:center;background-color:#ffff80;font-size:large;'><tr><td>Status</td><td>"+weather.status+"</td>");
+                out.println("<tr><td>High temperature 🌡</td><td>"+weather.maxTemp+"</td>");
+                out.println("<tr><td>Low temperature 🌡</td><td>"+weather.minTemp+"</td></table><br>");
+                out.println("</div></center>");
+            }
+            out.println("</body>");
+            out.println("</html>");
+        }
+    }
+@Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        }
+@Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+   @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+}
